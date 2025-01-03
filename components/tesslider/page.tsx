@@ -289,6 +289,12 @@ export default function VideoStories() {
             duration: 4000,
         },
     ];
+
+    useEffect(() => {
+        if (currentIndex === 18) {
+            window.location.href = "https://www.rumahzakat.org/";
+        }
+    }, [currentIndex]);
     
 
     return (
