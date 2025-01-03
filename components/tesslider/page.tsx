@@ -125,6 +125,7 @@ export default function VideoStories() {
     const storyContentStyle: React.CSSProperties = {
         position: 'absolute',
         display: 'flex',
+        fontSize: '20px',
         top: '400px',
         maxWidth: '400px',
         flexDirection: 'column',
