@@ -3,6 +3,8 @@
 import Stories from 'stories-react';
 import 'stories-react/dist/index.css';
 import React, { useState, useEffect } from 'react';
+import CryptoJS from 'crypto-js';  // For AES encryption
+
 interface PlaceholderData {
     fullname: string;
     penerima_manfaat: string;
@@ -14,6 +16,8 @@ interface PlaceholderData {
     tahun: string;
     pro_Favorit: string;
 }
+
+const secretKey = 'your-strong-secret-key';  // Store in environment variable
 
 export default function VideoStories() {
     const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -29,18 +33,17 @@ export default function VideoStories() {
         tahun: "2024",
     });
 
+
     const encryptData = (data: string) => {
-        const secretKey = "your-secret-key";
-        return btoa(data + secretKey);
+        return CryptoJS.AES.encrypt(data, secretKey).toString();
     };
 
     const decryptData = (data: string) => {
-        const secretKey = "your-secret-key";
         try {
-            const decodedData = atob(data);
-            return decodedData.includes(secretKey) ? decodedData.replace(secretKey, "") : decodedData;
+            const bytes = CryptoJS.AES.decrypt(data, secretKey);
+            return bytes.toString(CryptoJS.enc.Utf8);
         } catch {
-            return data;
+            return '';
         }
     };
 
@@ -81,7 +84,7 @@ export default function VideoStories() {
             fullname: getQueryParam("fullname") || "Pengguna",
             pro_qurban: getQueryParam("pro_qurban") || "Pengguna",
             pro_ramadhan: getQueryParam("pro_ramadhan") || "Pengguna",
-            pro_Favorit : getQueryParam("pro_Favorit") || "Pengguna",
+            pro_Favorit: getQueryParam("pro_Favorit") || "Pengguna",
             penerima_manfaat: getQueryParam("penerima_manfaat") || "Pengguna",
             nominal: getQueryParam("nominal")
                 ? formatNominal(getQueryParam("nominal"))
