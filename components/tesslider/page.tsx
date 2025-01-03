@@ -290,12 +290,10 @@ export default function VideoStories() {
         },
     ];
 
-    useEffect(() => {
-        if (currentIndex === 18) {
-            window.location.href = "https://www.rumahzakat.org/";
-        }
-    }, [currentIndex]);
-    
+    const handleAllStoriesEnd = () => {
+        window.location.href = 'https://www.rumahzakat.org/';
+    };
+
 
     return (
         <div style={containerStyle}>
@@ -305,6 +303,7 @@ export default function VideoStories() {
                 stories={stories}
                 currentIndex={currentIndex}
                 onStoryChange={setCurrentIndex}
+                onAllStoriesEnd={handleAllStoriesEnd} 
             />
             {stories.map((story, index) => (
                 <div
